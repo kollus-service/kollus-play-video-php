@@ -56,7 +56,6 @@ install [Hash](http://pecl.php.net/package/hash) Package Using [PECL](http://php
 ## Jwt webtoken Sample Codes
 
 ```php
-<?php
 ...
 
 $securityKey = 'security_key';
@@ -83,8 +82,12 @@ $jwtToken = jwt_encode($payload, $securityKey);
 $webTokenURL = 'http://v.kr.kollus.com/s?jwt=' . $jwtToken . '&custom_key=' . $customKey;
 
 ...
+
 ?>
+
 ...
+
 <iframe src="<?php echo $webTokenURL; ?>" allowfullscreen></iframe>
+
 ...
 ```

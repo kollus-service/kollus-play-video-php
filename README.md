@@ -49,7 +49,7 @@ Open browser '[http://localhost:8080](http://localhost:8080)'
 
 Best way is using php7.
 
-If you use php5.5 below, see [Alternative Ways](ALTERNATIVE)
+If you use php5.5 below, see [Alternative Ways](ALTERNATIVE.md)
 * can't use jwt library by composer
 * can't use json library
 * can't use hash_hmac
