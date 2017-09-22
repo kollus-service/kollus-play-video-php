@@ -1,0 +1,7 @@
+/.idea
+/vendor
+/logs/*
+!/logs/README.md
+/config.yml
+/composer.lock
+/composer.phar

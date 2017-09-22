@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kollus Play Video By PHP</title>
+
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/darkula.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://highlightjs.org/static/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<nav class="navbar navbar-default  navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Kollus Play Video By PHP</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                <li><a href="https://github.com/kollus-service/kollus-play-video-php"><i class="fa fa-github fa-lg"></i> Github</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Play Video using Kollus Webtoken</h1>
+    </div>
+
+    <div class="flashes"></div>
+
+    <div class="well">
+        <form id="channel-form" method="post">
+            <fieldset <?php if (!$existsConfig) { echo 'disabled'; }; ?>>
+<?php if ($existsConfig): ?>
+                <div class="form-group">
+                    <label>Service account key</label>
+                    <p class="form-control-static"><?php echo $kollus['service_account']['key']; ?></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Kollus domain</label>
+                    <p class="form-control-static"><?php echo $kollus['domain']; ?></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Client User ID</label>
+                    <p class="form-control-static"><?php echo $clientUserId; ?></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="channel">Channel</label>
+                    <select class="form-control" id="channel" name="channel_key" data-action="channel-selector">
+<?php foreach ($channels as $channel): ?>
+                        <option value="<?php echo $channel->getKey(); ?>"<?php echo $channel->getKey() == $channelKey ? ' selected' : ''; ?>><?php echo $channel->getName(); ?></option>
+<?php endforeach; ?>
+                    </select>
+                </div>
+<?php endif; ?>
+            </fieldset>
+        </form>
+    </div>
+
+    <hr />
+
+    <div id="channel-media-content-list">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="select">&nbsp;</th>
+                <th class="poster">&nbsp;</th>
+                <th class="title">Title</th>
+                <th class="upload-file-key">Upload file key</th>
+                <th class="media-content-key">Media content key</th>
+                <th class="status">Status</th>
+                <th class="action">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+<?php foreach($mediaContents as $mediaContent): ?>
+            <tr>
+                <td><input type="checkbox" data-action="download-item" value="<?php echo $mediaContent->getUploadFileKey(); ?>"></td>
+                <td class="poster">
+                    <img src="https://v.<?php echo $kollus['domain']; ?>/poster/<?php echo $mediaContent->getMediaContentKey(); ?>" class="thumbnail" style="max-width: 80px; max-height: 80px;" alt="" />
+                </td>
+                <td class="title">
+                    <span class="fa fa-<?php echo $mediaContent->getKindName() == 'video' ? 'video-camera' : 'music'; ?>"></span>
+                    <span class="fa fa-<?php echo $mediaContent->getUseEncryption() == 1 ? 'lock' : 'unlock'; ?>"></span>
+                    <?php echo $mediaContent->getTitle(); ?>
+                </td>
+                <td class="upload-file-key"><span class="label label-warning"><?php echo $mediaContent->getUploadFileKey(); ?></span></td>
+                <td class="media-content-key"><span class="label label-info"><?php echo $mediaContent->getMediaContentKey(); ?></span></td>
+                <td class="status"><span class="fa fa-toggle-<?php echo $mediaContent->getStatus() == 1 ? 'on' : 'off'; ?>"></span></td>
+                <td class="action">
+<?php if ($mediaContent->getStatus()): ?>
+                    <button class="btn btn-primary btn-xs" data-action="modal-play-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                        <span class="fa fa-play"></span> Play
+                    </button>
+                    <button class="btn btn-success btn-xs" data-action="modal-download-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                        <span class="fa fa-download"></span> Download
+                    </button>
+<?php endif; ?>
+                </td>
+            </tr>
+<?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <div class="btn-group" role="group">
+            <button class="btn btn-success" data-action="call-play-video-playlist" data-channel-key="<?php echo $channelKey; ?>">
+                <span class="fa fa-download"></span>
+                Play playlist
+            </button>
+            <button class="btn btn-warning" data-action="call-download-multi-video" data-channel-key="<?php echo $channelKey; ?>">
+                <span class="fa fa-download"></span>
+                Download selected
+            </button>
+        </div>
+    </div>
+
+    <hr />
+
+    <footer class="footer">
+        <p>2017 &copy; Catenoid, inc.</p>
+    </footer>
+
+</div>
+<!--[if lt IE 10]>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--<![endif]-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
+<script src="/js/default.js"></script>
+</body>
+</html>

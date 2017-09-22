@@ -1,0 +1,37 @@
+{
+  "name": "kollus-serverice/kollus-play-video-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yun Young-jin",
+      "email": "yupmin@catenoid.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "slim/slim": "^3.8",
+    "slim/php-view": "^2.2",
+    "monolog/monolog": "^1.23",
+    "guzzlehttp/guzzle": "^6.3",
+    "firebase/php-jwt": "^5.0",
+    "bryanjhv/slim-session": "^3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=4.8 < 6.0"
+  },
+  "autoload": {
+    "psr-4" : { "Kollus\\Component\\": "src/" }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "process-timeout" : 0
+  },
+  "scripts": {
+    "start": "php -S 0.0.0.0:8080 -t public public/index.php",
+    "test": "phpunit"
+  }
+}
