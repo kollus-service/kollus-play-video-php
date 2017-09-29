@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
-                <li><a href="https://github.com/kollus-service/kollus-play-video-php"><i class="fa fa-github fa-lg"></i> Github</a></li>
+                <li><a href="https://github.com/kollus-service/kollus-play-video-php"><i class="fa fa-github"></i> Github</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -52,31 +52,31 @@
     <div class="well">
         <form id="channel-form" method="post">
             <fieldset <?php if (!$existsConfig) { echo 'disabled'; }; ?>>
-<?php if ($existsConfig): ?>
-                <div class="form-group">
-                    <label>Service account key</label>
-                    <p class="form-control-static"><?php echo $kollus['service_account']['key']; ?></p>
-                </div>
+                <?php if ($existsConfig): ?>
+                    <div class="form-group">
+                        <label>Service account key</label>
+                        <p class="form-control-static"><?php echo $kollus['service_account']['key']; ?></p>
+                    </div>
 
-                <div class="form-group">
-                    <label>Kollus domain</label>
-                    <p class="form-control-static"><?php echo $kollus['domain']; ?></p>
-                </div>
+                    <div class="form-group">
+                        <label>Kollus domain</label>
+                        <p class="form-control-static"><?php echo $kollus['domain']; ?></p>
+                    </div>
 
-                <div class="form-group">
-                    <label>Client User ID</label>
-                    <p class="form-control-static"><?php echo $clientUserId; ?></p>
-                </div>
+                    <div class="form-group">
+                        <label>Client User ID</label>
+                        <p class="form-control-static"><?php echo $clientUserId; ?></p>
+                    </div>
 
-                <div class="form-group">
-                    <label for="channel">Channel</label>
-                    <select class="form-control" id="channel" name="channel_key" data-action="channel-selector">
-<?php foreach ($channels as $channel): ?>
-                        <option value="<?php echo $channel->getKey(); ?>"<?php echo $channel->getKey() == $channelKey ? ' selected' : ''; ?>><?php echo $channel->getName(); ?></option>
-<?php endforeach; ?>
-                    </select>
-                </div>
-<?php endif; ?>
+                    <div class="form-group">
+                        <label for="channel">Channel</label>
+                        <select class="form-control" id="channel" name="channel_key" data-action="channel-selector">
+                            <?php foreach ($channels as $channel): ?>
+                                <option value="<?php echo $channel->getKey(); ?>"<?php echo $channel->getKey() == $channelKey ? ' selected' : ''; ?>><?php echo $channel->getName(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                <?php endif; ?>
             </fieldset>
         </form>
     </div>
@@ -97,32 +97,32 @@
             </tr>
             </thead>
             <tbody>
-<?php foreach($mediaContents as $mediaContent): ?>
-            <tr>
-                <td><input type="checkbox" data-action="download-item" value="<?php echo $mediaContent->getUploadFileKey(); ?>"></td>
-                <td class="poster">
-                    <img src="https://v.<?php echo $kollus['domain']; ?>/poster/<?php echo $mediaContent->getMediaContentKey(); ?>" class="thumbnail" style="max-width: 80px; max-height: 80px;" alt="" />
-                </td>
-                <td class="title">
-                    <span class="fa fa-<?php echo $mediaContent->getKindName() == 'video' ? 'video-camera' : 'music'; ?>"></span>
-                    <span class="fa fa-<?php echo $mediaContent->getUseEncryption() == 1 ? 'lock' : 'unlock'; ?>"></span>
-                    <?php echo $mediaContent->getTitle(); ?>
-                </td>
-                <td class="upload-file-key"><span class="label label-warning"><?php echo $mediaContent->getUploadFileKey(); ?></span></td>
-                <td class="media-content-key"><span class="label label-info"><?php echo $mediaContent->getMediaContentKey(); ?></span></td>
-                <td class="status"><span class="fa fa-toggle-<?php echo $mediaContent->getStatus() == 1 ? 'on' : 'off'; ?>"></span></td>
-                <td class="action">
-<?php if ($mediaContent->getStatus()): ?>
-                    <button class="btn btn-primary btn-xs" data-action="modal-play-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
-                        <span class="fa fa-play"></span> Play
-                    </button>
-                    <button class="btn btn-success btn-xs" data-action="modal-download-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
-                        <span class="fa fa-download"></span> Download
-                    </button>
-<?php endif; ?>
-                </td>
-            </tr>
-<?php endforeach; ?>
+            <?php foreach($mediaContents as $mediaContent): ?>
+                <tr>
+                    <td><input type="checkbox" data-action="download-item" value="<?php echo $mediaContent->getUploadFileKey(); ?>"></td>
+                    <td class="poster">
+                        <img src="https://v.<?php echo $kollus['domain']; ?>/poster/<?php echo $mediaContent->getMediaContentKey(); ?>" class="thumbnail" style="max-width: 80px; max-height: 80px;" alt="" />
+                    </td>
+                    <td class="title">
+                        <span class="fa fa-<?php echo $mediaContent->getKindName() == 'video' ? 'video-camera' : 'music'; ?>"></span>
+                        <span class="fa fa-<?php echo $mediaContent->getUseEncryption() == 1 ? 'lock' : 'unlock'; ?>"></span>
+                        <?php echo $mediaContent->getTitle(); ?>
+                    </td>
+                    <td class="upload-file-key"><span class="label label-warning"><?php echo $mediaContent->getUploadFileKey(); ?></span></td>
+                    <td class="media-content-key"><span class="label label-info"><?php echo $mediaContent->getMediaContentKey(); ?></span></td>
+                    <td class="status"><span class="fa fa-toggle-<?php echo $mediaContent->getStatus() == 1 ? 'on' : 'off'; ?>"></span></td>
+                    <td class="action">
+                        <?php if ($mediaContent->getStatus()): ?>
+                            <button class="btn btn-primary btn-xs" data-action="modal-play-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                                <span class="fa fa-play"></span> Play
+                            </button>
+                            <button class="btn btn-success btn-xs" data-action="modal-download-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                                <span class="fa fa-download"></span> Download
+                            </button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
 

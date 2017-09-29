@@ -57,26 +57,26 @@
     <div class="well">
         <form action="/" id="login-form" method="post">
             <fieldset <?php if (!$existsConfig) { echo 'disabled'; }; ?>>
-<?php if ($existsConfig): ?>
-            <div class="form-group">
-                <label>Service account key</label>
-                <p class="form-control-static"><?php echo $kollus['service_account']['key']; ?></p>
-            </div>
+                <?php if ($existsConfig): ?>
+                    <div class="form-group">
+                        <label>Service account key</label>
+                        <p class="form-control-static"><?php echo $kollus['service_account']['key']; ?></p>
+                    </div>
 
-            <div class="form-group">
-                <label>Kollus domain</label>
-                <p class="form-control-static"><?php echo $kollus['domain']; ?></p>
-            </div>
+                    <div class="form-group">
+                        <label>Kollus domain</label>
+                        <p class="form-control-static"><?php echo $kollus['domain']; ?></p>
+                    </div>
 
-            <div class="form-group">
-                <label for="client-user-id">Client User ID</label>
-                <input type="text" class="form-control" id="client-user-id" name="client_user_id" placeholder="Please type client user id" required>
-            </div>
+                    <div class="form-group">
+                        <label for="client-user-id">Client User ID</label>
+                        <input type="text" class="form-control" id="client-user-id" name="client_user_id" placeholder="Please type client user id" required>
+                    </div>
 
-            <button class="btn btn-primary" type="submit">
-                <i class="fa fa-sign-in"></i> Login
-            </button>
-<?php endif; ?>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-sign-in"></i> Login
+                    </button>
+                <?php endif; ?>
             </fieldset>
         </form>
     </div>

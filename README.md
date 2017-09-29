@@ -1,6 +1,6 @@
 # Kollus Play Video By PHP
 
-Play or download video by Kollus JWT WebToken : Sample Source
+Play or download video by Kollus WebToken : Sample Source
 
 ## Requirement
 
@@ -11,7 +11,7 @@ Play or download video by Kollus JWT WebToken : Sample Source
       * [guzzle php http client](http://docs.guzzlephp.org/)
       * [firebase/php-jwt](https://github.com/firebase/php-jwt)
 * [jQuery](https://jquery.com) : 3.2.1
-* [Boostrap 3](https://getbootstrap.com/docs/3.3/) : for smaple code
+* [Boostrap 3](https://getbootstrap.com/docs/3.3/) : for sample code
       
 ## Installation
 
@@ -32,6 +32,8 @@ kollus:
     api_access_token: [api access token]
     custom_key: [custom key]
     security_key: [security key]
+  play_options:
+    expire_time: 86400 # 1day
 ```
 
 ## How to use
@@ -66,11 +68,11 @@ If you use php5.5 below, see [Alternative Ways](ALTERNATIVE.md)
    * use getWebTokenByMediaItems in src/Component/Client/VideoGatewayClient.php
 3. Open iframe + web-token-url in instant modal
    * use modal-play-video event in public/js/default.js
-4. If you want... Kollus Player can use 'kollus play callback'
+4. If you want... Kollus Player App can use 'kollus play callback'
 
 ### Download video
 
-0. You must install kollus player.
+0. You must install Kollus Player App.
 1. Press 'Download' button and call local server api for generate 'web-token-url' on browser
    * '/auth/download-video-url/{channel_key}/{upload_file_key}' in public/index.php
 2. Generate WebTokenURL
@@ -78,31 +80,32 @@ If you use php5.5 below, see [Alternative Ways](ALTERNATIVE.md)
    * use getWebTokenByMediaItems in src/Component/Client/VideoGatewayClient.php
 3. Open iframe + web-token-url in instant modal
    * use modal-download-video event in public/js/default.js
-4. If you want... Kollus Player can use 'kollus drm callback'
-5. If your platform is mac osx or media is not encrypted, it will be streaming.
+4. Call Kollus Player App
+5. If you want... Kollus Player App can use 'kollus drm callback'
+6. If your platform is mac osx or media is not encrypted, it will be streaming.
 
 ### Play video playlist
 
-0. You must install kollus player.
+0. You must install Kollus Player App.
 1. Select video.
 2. Press 'Play playlist' button and call local server api for generate 'web-token-url' on browser
    * '/auth/play-video-playlist/{channel_key}' in public/index.php
 3. Generate WebTokenURL
    * use getWebTokenURLByMediaItems in src/Component/Client/VideoGatewayClient.php
    * use getWebTokenByMediaItems in src/Component/Client/VideoGatewayClient.php
-4. Call Kollus Player app
+4. Call Kollus Player App
 5. If your platform is mac osx or more environments, is not working.
 
 ### Download Multi video
 
-0. You must install kollus player.
+0. You must install Kollus Player App.
 1. Select video.
 2. Press 'Download selected' button and call local server api for generate 'web-token-url' on browser
    * '/auth/download-multi-video/{channel_key}' in public/index.php
 3. Generate WebTokenURL
    * use getWebTokenURLByMediaItems in src/Component/Client/VideoGatewayClient.php
    * use getWebTokenByMediaItems in src/Component/Client/VideoGatewayClient.php
-4. Call Kollus Player app
+4. Call Kollus Player App
 
 
 ### Important code
