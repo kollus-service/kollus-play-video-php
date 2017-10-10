@@ -340,7 +340,7 @@ $app->post(
 public/js/default.js
 
 ```javascript
-$(document).on('click', 'button[data-action=call-download-multi-video]', function(e) {
+$(document).on('click', 'button[data-action=call-play-video-playlist]', function(e) {
   e.preventDefault();
 
   ...
@@ -353,8 +353,8 @@ $(document).on('click', 'button[data-action=call-download-multi-video]', functio
     });
   });
 
-  $.post('/auth/download-multi-video/' + channelKey, postDatas, function (data) {
-    document.location.href = 'kollus://download?url=' + encodeURIComponent(data.web_token_url);
+  $.post('/auth/play-video-playlist/' + channelKey, postDatas, function (data) {
+    document.location.href = 'kollus://path?url=' + encodeURIComponent(data.web_token_url);
   });
 });
 ```
@@ -403,7 +403,7 @@ $app->post(
 public/js/default.js
 
 ```javascript
-$(document).on('click', 'button[data-action=call-play-video-playlist]', function(e) {
+$(document).on('click', 'button[data-action=call-download-multi-video]', function(e) {
   e.preventDefault();
 
   ...
@@ -416,8 +416,8 @@ $(document).on('click', 'button[data-action=call-play-video-playlist]', function
     });
   });
 
-  $.post('/auth/play-video-playlist/' + channelKey, postDatas, function (data) {
-    document.location.href = 'kollus://path?url=' + encodeURIComponent(data.web_token_url);
+  $.post('/auth/download-multi-video/' + channelKey, postDatas, function (data) {
+    document.location.href = 'kollus://download?url=' + encodeURIComponent(data.web_token_url);
   });
 });
 ```
