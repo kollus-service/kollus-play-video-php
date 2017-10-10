@@ -302,69 +302,6 @@ public/index.php
 
 ```php
 $app->post(
-    '/auth/download-multi-video/{channel_key}',
-    function (Request $request, Response $response, $args) use ($container) {
-
-        ...
-
-        $channelKey = isset($args['channel_key']) ? $args['channel_key'] : null;
-        $selectedMediaItems = $request->getParam('selected_media_items', []);
-
-        $mediaItems = new Kollus\Component\Container\ContainerArray();
-        foreach ($selectedMediaItems as $selectedMediaItem) {
-            $mediaContent = $kollusApiClient->getChannelMediaContent(
-                $channelKey,
-                $selectedMediaItem['upload_file_key']
-            );
-            $mediaItems->append(
-                new \Kollus\Component\Container\MediaItem([
-                    # get media-content-key by your DB
-                    'media_content_key' => $mediaContent->getMediaContentKey()
-                ])
-            );
-        }
-
-        $data = [
-            'web_token_url' => $kollusVideoGatewayClient->getWebTokenURLByMediaItems(
-                $mediaItems,
-                $clientUserId,
-                [ 'kind' => 'si', 'expire_time' => $kollusSettings['play_options']['expire_time'] ]
-            ),
-        ];
-
-        return $response->withJson($data, 200);
-    }
-)->setName('auth-download-multi-video');
-```
-
-public/js/default.js
-
-```javascript
-$(document).on('click', 'button[data-action=call-play-video-playlist]', function(e) {
-  e.preventDefault();
-
-  ...
-
-  checkedItems.each(function(index, element) {
-    uploadFileKey = $(element).val();
-
-    postDatas.selected_media_items.push({
-      upload_file_key: uploadFileKey
-    });
-  });
-
-  $.post('/auth/play-video-playlist/' + channelKey, postDatas, function (data) {
-    document.location.href = 'kollus://path?url=' + encodeURIComponent(data.web_token_url);
-  });
-});
-```
-
-#### Download multi video
-
-public/index.php
-
-```php
-$app->post(
     '/auth/play-video-playlist/{channel_key}',
     function (Request $request, Response $response, $args) use ($container) {
 
@@ -398,6 +335,69 @@ $app->post(
         return $response->withJson($data, 200);
     }
 )->setName('auth-play-video-playlist');
+```
+
+public/js/default.js
+
+```javascript
+$(document).on('click', 'button[data-action=call-play-video-playlist]', function(e) {
+  e.preventDefault();
+
+  ...
+
+  checkedItems.each(function(index, element) {
+    uploadFileKey = $(element).val();
+
+    postDatas.selected_media_items.push({
+      upload_file_key: uploadFileKey
+    });
+  });
+
+  $.post('/auth/play-video-playlist/' + channelKey, postDatas, function (data) {
+    document.location.href = 'kollus://path?url=' + encodeURIComponent(data.web_token_url);
+  });
+});
+```
+
+#### Download multi video
+
+public/index.php
+
+```php
+$app->post(
+    '/auth/download-multi-video/{channel_key}',
+    function (Request $request, Response $response, $args) use ($container) {
+
+        ...
+
+        $channelKey = isset($args['channel_key']) ? $args['channel_key'] : null;
+        $selectedMediaItems = $request->getParam('selected_media_items', []);
+
+        $mediaItems = new Kollus\Component\Container\ContainerArray();
+        foreach ($selectedMediaItems as $selectedMediaItem) {
+            $mediaContent = $kollusApiClient->getChannelMediaContent(
+                $channelKey,
+                $selectedMediaItem['upload_file_key']
+            );
+            $mediaItems->append(
+                new \Kollus\Component\Container\MediaItem([
+                    # get media-content-key by your DB
+                    'media_content_key' => $mediaContent->getMediaContentKey()
+                ])
+            );
+        }
+
+        $data = [
+            'web_token_url' => $kollusVideoGatewayClient->getWebTokenURLByMediaItems(
+                $mediaItems,
+                $clientUserId,
+                [ 'kind' => 'si', 'expire_time' => $kollusSettings['play_options']['expire_time'] ]
+            ),
+        ];
+
+        return $response->withJson($data, 200);
+    }
+)->setName('auth-download-multi-video');
 ```
 
 public/js/default.js
