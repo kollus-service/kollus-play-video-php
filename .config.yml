@@ -1,0 +1,10 @@
+kollus:
+  domain: kr.kollus.com
+  version: 0
+  service_account:
+    key : service_account_key
+    api_access_token: api_access_token
+    custom_key: custom_key
+  play_options:
+#    expire_time: 86400 # 1day
+    expire_time: 1296000 # 15day

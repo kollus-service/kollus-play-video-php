@@ -87,8 +87,7 @@ $(document).on('click', 'button[data-action=modal-play-video]', function(e) {
   e.preventDefault();
 
   var self = this,
-    channelKey = $(self).attr('data-channel-key'),
-    uploadFileKey = $(self).attr('data-upload-file-key'),
+    uploadFileKey = $(self).data('upload-file-key'),
     modalContent;
 
   $.post('/auth/play-video-url/' + channelKey + '/' + uploadFileKey, function (data) {
@@ -118,8 +117,7 @@ $(document).on('click', 'button[data-action=modal-download-video]', function(e) 
   e.preventDefault();
 
   var self = this,
-    channelKey = $(self).attr('data-channel-key'),
-    uploadFileKey = $(self).attr('data-upload-file-key'),
+    uploadFileKey = $(self).data('upload-file-key'),
     modalContent;
 
   showAlert('warning', 'If your platform is mac osx or media is not encrypted, it will be streaming.');
@@ -151,7 +149,6 @@ $(document).on('click', 'button[data-action=call-download-multi-video]', functio
   e.preventDefault();
 
   var self = this,
-    channelKey = $(self).attr('data-channel-key'),
     checkedItems = $('input[type=checkbox][data-action=download-item]:checked'),
     postDatas = {
       selected_media_items: []
@@ -181,7 +178,6 @@ $(document).on('click', 'button[data-action=call-play-video-playlist]', function
   e.preventDefault();
 
   var self = this,
-    channelKey = $(self).attr('data-channel-key'),
     checkedItems = $('input[type=checkbox][data-action=download-item]:checked'),
     postDatas = {
       selected_media_items: []

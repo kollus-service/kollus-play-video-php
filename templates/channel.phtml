@@ -113,10 +113,10 @@
                     <td class="status"><span class="fa fa-toggle-<?php echo $mediaContent->getStatus() == 1 ? 'on' : 'off'; ?>"></span></td>
                     <td class="action">
                         <?php if ($mediaContent->getStatus()): ?>
-                            <button class="btn btn-primary btn-xs" data-action="modal-play-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                            <button class="btn btn-primary btn-xs" data-action="modal-play-video" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
                                 <span class="fa fa-play"></span> Play
                             </button>
-                            <button class="btn btn-success btn-xs" data-action="modal-download-video" data-channel-key="<?php echo $channelKey; ?>" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
+                            <button class="btn btn-success btn-xs" data-action="modal-download-video" data-upload-file-key="<?php echo $mediaContent->getUploadFileKey(); ?>">
                                 <span class="fa fa-download"></span> Download
                             </button>
                         <?php endif; ?>
@@ -127,11 +127,11 @@
         </table>
 
         <div class="btn-group" role="group">
-            <button class="btn btn-success" data-action="call-play-video-playlist" data-channel-key="<?php echo $channelKey; ?>">
+            <button class="btn btn-success" data-action="call-play-video-playlist">
                 <span class="fa fa-download"></span>
                 Play playlist
             </button>
-            <button class="btn btn-warning" data-action="call-download-multi-video" data-channel-key="<?php echo $channelKey; ?>">
+            <button class="btn btn-warning" data-action="call-download-multi-video">
                 <span class="fa fa-download"></span>
                 Download selected
             </button>
@@ -153,6 +153,9 @@
 <!--<![endif]-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
+<script>
+  var channelKey = '<?php echo $channelKey;?>';
+</script>
 <script src="/js/default.js"></script>
 </body>
 </html>
